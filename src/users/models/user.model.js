@@ -5,16 +5,16 @@ export class User {
 
   /**
    * 
-   * @param {Like<User>} userDataLike 
+   * @param {Like<User>} userDataLike
    */
-  constructor({ id, isActive, balance, avatar, firstName, lastName, gender }) {
+  constructor({  avatar, balance, firstName, gender, id, isActive, lastName}) {
+    this.avatar     = avatar;
+    this.balance    = balance;
+    this.firstName  = firstName;
+    this.gender     = gender;
     this.id         = id;
     this.isActive   = isActive;
-    this.balance    = balance;
-    this.avatar     = avatar;
-    this.firstName = firstName;
-    this.lastName  = lastName;
-    this.gender     = gender;
+    this.lastName   = lastName;
   }
 
 }

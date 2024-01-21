@@ -1,4 +1,4 @@
-import { loadUsersByPage } from "../use-cases/load-users-by-page";
+import { loadUsersByPage } from "../use-cases/load-users-by-page.js";
 
 
 const state = {
@@ -8,14 +8,18 @@ const state = {
 
 // Cargar la siguiente pagina
 const loadNextPage = async() => {
-  await loadUsersByPage( state.currentPage + 1 );
-
+  const users =  await loadUsersByPage( state.currentPage + 1 );
+  if( users.length === 0 ||  state.currentPage === 5 ) return;
+  state.currentPage += 1;
+  state.users = users;
 }
 
 // Cargar pagina anterior
 const loadPreviousPage = async() => {
-  throw new Error('Not implemented');
-
+  if ( state.currentPage === 1 ) return;
+  const users = await loadUsersByPage( state.currentPage - 1 );
+  state.users = users;
+  state.currentPage -= 1;
 }
 
 // Un usuario cambia
@@ -36,7 +40,16 @@ export default {
   onUserChanged,
   reloadPage,
 
+  /**
+   * 
+   * @returns {User[]}
+   */
   getUsers: () => [...state.users],
+
+  /**
+   * 
+   * @returns {Number}
+   */
   getCurrentPage: () => state.currentPage,
 
 }
